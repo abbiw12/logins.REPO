@@ -1,9 +1,10 @@
 const express = require("express")
 const prisma = require('../context');
-const { userLogin } = require("../controller/userloginController");
+const { userLogin,adminLogin } = require("../controller/userloginController");
 
-const userloginRouter = express.Router()
+const userRouter = express.Router()
 
-userloginRouter.post("/user-login",userLogin)
+userRouter.post("/user-login",userLogin)
+userRouter.post("/admin-login",adminLogin)
 
-module.exports = userloginRouter;
+module.exports = userRouter;
