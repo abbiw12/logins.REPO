@@ -42,7 +42,7 @@ const userLogin = async(req,res) => {
         role: user.role
         }
 
-    const accessToken = jwt.sign(payload,process.env.ACCESS_TOKEN_SECRET)
+    const accessToken = jwt.sign(payload,process.env.SECRET)
 
     return res.status(200).json({data:{ token:accessToken},msg: "login successful"})
 

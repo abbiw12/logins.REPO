@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const userRouter = require("./router/userlogins");
 
 const app = express();
-portNumber = 4002;
+portNumber = process.env.PORT;
 const prisma = new PrismaClient();
 app.use(express.json());
 
