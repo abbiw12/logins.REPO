@@ -68,7 +68,7 @@ const userLogin = async (req, res) => {
         return res.status(200).json({ data: { token: accessToken }, msg: "Login successful" });
     } catch (error) {
         console.error("Error during login:", error.message);
-        return res.status(500).json({ msg: "Internal server error" });
+        return res.status(500).json({ msg: "email already exist" });
     }
 };
 
