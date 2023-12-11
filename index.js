@@ -1,13 +1,24 @@
 const { PrismaClient } = require("@prisma/client");
 const express = require("express");
+const cors = require("cors");
 const userRouter = require("./router/userlogins");
 
 const app = express();
-portNumber = process.env.PORT;
+const portNumber = process.env.PORT;
+
+app.use(cors({
+    origin: "*"
+}));
+
 app.use(express.json());
 
-app.use("/user",userRouter)
+app.use("/user", userRouter);
 
-app.listen(portNumber,() => {
-    console.log(`server is running on port${portNumber}`)
-})
+app.listen(portNumber, () => {
+    console.log(`Server is running on port ${portNumber}`);
+});
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something went wrong!');
+});
