@@ -36,7 +36,7 @@ const userSignUp = async(req,res) => {
         
     } catch (error) {
         console.error("Error during signup:", error.message);
-        return res.status(500).json({ msg: "Internal server error" })
+        return res.status(500).json({ msg: "Error signing up. Try again thank you." })
     }
     
    
