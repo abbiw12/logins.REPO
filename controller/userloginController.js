@@ -1,10 +1,19 @@
-const express =require("express")
 const prisma = require('../context');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
+
+const getAllUsers =async(req,res) => {
+    const allUsers = await prisma.user.findMany({
+        select: {
+            id:true
+        }
+    })
+    res.json({allUsers,msg: "these are all the users in the table."})
+}
+
 const userSignUp = async(req,res) => {
-    
+    try { 
     const {Name,userName,email,password} = req.body
 
     const haspassword = await bcrypt.hash(password,10)
@@ -22,32 +31,48 @@ const userSignUp = async(req,res) => {
         
     }
    })
+   
    res.json({ success:true, user:newUser})
-}
-const userLogin = async(req,res) => {
-    const {email,password} = req.body;
-    const user = await prisma.user.findUnique({
-        where: {
-            email
-        }
-    })
-    if (!user) return res.status(400).json({ msg: "Invalid username or password" })
-
-    const isPasswordMatch = await bcrypt.compare(password, user.password);
+        
+    } catch (error) {
+        console.error("Error during signup:", error.message);
+        return res.status(500).json({ msg: "Internal server error" })
+    }
     
-    if(!isPasswordMatch) return res.status(400).json({msg: "Invalid username or password"})
-    const payload= {
-        id: user.id,
-        email: user.email,
-        role: user.role
-        }
-
-    const accessToken = jwt.sign(payload,process.env.SECRET)
-
-    return res.status(200).json({data:{ token:accessToken},msg: "login successful"})
-
-
+   
 }
+const userLogin = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        const user = await prisma.user.findUnique({
+            where: {
+                email,
+            },
+        });
+
+        if (!user) return res.status(400).json({ msg: "Invalid username or password" });
+
+        const isPasswordMatch = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordMatch) return res.status(400).json({ msg: "Invalid username or password" });
+
+        const payload = {
+            id: user.id,
+            email: user.email,
+            role: user.role,
+        };
+
+        const accessToken = jwt.sign(payload, process.env.SECRET);
+
+        return res.status(200).json({ data: { token: accessToken }, msg: "Login successful" });
+    } catch (error) {
+        console.error("Error during login:", error.message);
+        return res.status(500).json({ msg: "Internal server error" });
+    }
+};
+
+
 const userUpdate =async(req,res)=> {
     
         const { userName, email} = req.body;
@@ -84,6 +109,7 @@ const userdelete =async(req,res) => {
 }
 
 module.exports = {
+    getAllUsers,
     userSignUp,
     userLogin,
     userUpdate,
