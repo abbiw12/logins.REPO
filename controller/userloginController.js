@@ -75,7 +75,8 @@ const userLogin = async (req, res) => {
 
 const userUpdate =async(req,res)=> {
     
-        const { userName, email} = req.body;
+    try {
+             const { userName, email} = req.body;
         const { id } = req.params;
         const updateUser = await prisma.user.update({
           where: {
@@ -86,8 +87,13 @@ const userUpdate =async(req,res)=> {
             email
           },
         });
-        res.json({updateUser,msg: "update successful"})
+        res.json({updateUser,msg: "update successful"})   
+   
+    } catch (error) {
+        console.log("invaild username or email")
     }
+}
+
 const userdelete =async(req,res) => {
     const id = req.params.id
     const existing = await prisma.user.findUnique({
