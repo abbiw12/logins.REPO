@@ -1,5 +1,4 @@
-const yup = require("yup");
-
+const yup = require("yup")
 const authSchema = yup.object({
     body: yup.object({
         Name: yup.string().required(),
@@ -8,6 +7,5 @@ const authSchema = yup.object({
     password: yup.string().min(6).max(15).required()
     })
 })
-
 
 module.exports = authSchema;
