@@ -18,7 +18,7 @@ const userSignUp = async(req,res) => {
 
     const haspassword = await bcrypt.hash(password,10)
 
-   const newUser = await prisma.user.create({
+   const newUser = awaitprisma.user.create({
     data: {
         Name,
         userName,
@@ -87,7 +87,7 @@ const userUpdate =async(req,res)=> {
             email
           },
         });
-        res.json({updateUser,msg: "update successful"})   
+        res.json({updateUser,msg: "update successful"})    
    
     } catch (error) {
         console.log("invaild username or email")

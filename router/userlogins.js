@@ -8,4 +8,5 @@ userRouter.post("/signUp",userSignUp)
 userRouter.post("/login",userLogin)
 userRouter.put("/Update",userUpdate)
 userRouter.delete("/Delete",userdelete)
+
 module.exports = userRouter;

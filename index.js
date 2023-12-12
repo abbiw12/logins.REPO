@@ -2,7 +2,8 @@ const { PrismaClient } = require("@prisma/client");
 const express = require("express");
 const cors = require("cors");
 const userRouter = require("./router/userlogins");
-
+const validations = require("./Middlewares/validationMiddleeware")
+const authSchema = require("./Validations/uservalidations")
 const app = express();
 const portNumber = process.env.PORT;
 
