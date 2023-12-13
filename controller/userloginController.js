@@ -18,7 +18,7 @@ const userSignUp = async(req,res) => {
 
     const haspassword = await bcrypt.hash(password,10)
 
-   const newUser = awaitprisma.user.create({
+   const newUser = await prisma.user.create({
     data: {
         Name,
         userName,
@@ -33,13 +33,21 @@ const userSignUp = async(req,res) => {
    })
    
    res.json({ success:true, user:newUser})
-        
+   const user = await prisma.user.findUnique({
+    where: {
+        email: true
+    },
+if (email) {
+    throw new Error('email already exist  ');
+}   
+});
+
+
     } catch (error) {
-        console.error("Error during signup:", error.message);
+        console.error(error);
         return res.status(500).json({ msg: "Error signing up. Try again thank you." })
     }
     
-   
 }
 const userLogin = async (req, res) => {
     try {

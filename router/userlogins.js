@@ -8,7 +8,7 @@ const authSchema =require("../Validations/uservalidations")
   
   
 userRouter.get("/allUsers",getAllUsers)
-userRouter.post("/signUp",validations(authSchema),userSignUp)
+userRouter.post("/signUp",userSignUp)
 userRouter.post("/login",userLogin)
 userRouter.put("/Update",userUpdate)
 userRouter.delete("/Delete",userdelete)
