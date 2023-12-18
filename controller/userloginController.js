@@ -6,10 +6,11 @@ const bcrypt = require('bcrypt');
 const getAllUsers =async(req,res) => {
     const allUsers = await prisma.user.findMany({
         select: {
-           userName: true
+           userName: true,
+           email: true
         }
     })
-    res.json({allUsers,msg: "these are all the users in the table."})
+    res.json({allUsers,msg: "These are the users avliable."})
 }
 
 const userSignUp = async(req,res) => {
@@ -44,9 +45,9 @@ const userEmail = await prisma.user.findUnique({
     },
 });
 
-if (userEmail) {
-    throw new Error('Email already exists');
-}
+// if (userEmail) {
+//     throw new Error('Email already exists');
+// }
 
 
     } catch (error) {
