@@ -37,15 +37,21 @@ const userSignUp = async(req,res) => {
     where: {
         email: true
     },
-if (email) {
-    throw new Error('email already exist  ');
-}   
 });
+const userEmail = await prisma.user.findUnique({
+    where: {
+        email,
+    },
+});
+
+if (userEmail) {
+    throw new Error('Email already exists');
+}
 
 
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ msg: "Error signing up. Try again thank you." })
+        return res.status(500).json({ msg: "Email already exist.",})
     }
     
 }
